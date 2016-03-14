@@ -1,15 +1,15 @@
 
-angular.module('RecipeBook', ['ionic', 'recipe.service'])
+angular.module('PlantGuide', ['ionic', 'plant.guide'])
 
     .config(function($stateProvider, $urlRouterProvider) {
 
         $stateProvider
-            .state('recipemenu', {
-                url: "/recipeURL",
+            .state('plantmenu', {
+                url: "/plantURL",
                 abstract: true,
                 templateUrl: "event-menu.html"
             })
-            .state('recipemenu.home', {
+            .state('plantmenu.home', {
                 url: "/home",
                 views: {
                     'menuContent' :{
@@ -18,44 +18,44 @@ angular.module('RecipeBook', ['ionic', 'recipe.service'])
                 }
             })
 
-            .state('recipemenu.home/:recipeId', {
-                url: "/recipe-detail/:recipeId",
+            .state('plantmenu.home/:plantId', {
+                url: "/plant-detail/:plantId",
                 views: {
                     'menuContent' :{
                         templateUrl: "home.html",
-                        controller: 'RecipeDetailCtrl'
+                        controller: 'plantDetailCtrl'
                     }
                 }
             })
 
-            .state('recipemenu.all-recipe', {
-                url: "/all-recipe",
+            .state('plantmenu.all-plant', {
+                url: "/all-plant",
                 views: {
                     'menuContent' :{
-                        templateUrl: "all-recipe.html",
-                        controller: "AllRecipeCtrl"
+                        templateUrl: "all-plant.html",
+                        controller: "AllplantCtrl"
                     }
                 }
             })
-            .state('recipemenu.add-recipe', {
-                url: "/add-recipe",
+            .state('plantmenu.add-plant', {
+                url: "/add-plant",
                 views: {
                     'menuContent' :{
-                        templateUrl: "add-recipe.html",
-                        controller: "AddRecipeCtrl"
+                        templateUrl: "add-plant.html",
+                        controller: "AddplantCtrl"
                     }
                 }
             })
-            .state('recipemenu.edit-recipe/:recipeId', {
-                url: "/edit-recipe/:recipeId",
+            .state('plantmenu.edit-plant/:plantId', {
+                url: "/edit-plant/:plantId",
                 views: {
                     'menuContent' :{
-                        templateUrl: "add-recipe.html",
-                        controller: "AddRecipeCtrl"
+                        templateUrl: "add-plant.html",
+                        controller: "AddplantCtrl"
                     }
                 }
             })
-            .state('recipemenu.about', {
+            .state('plantmenu.about', {
                 url: "/about",
                 views: {
                     'menuContent' :{
@@ -64,7 +64,7 @@ angular.module('RecipeBook', ['ionic', 'recipe.service'])
                 }
             })
 
-        $urlRouterProvider.otherwise("/recipeURL/home");
+        $urlRouterProvider.otherwise("/plantURL/home");
     })
 
     .controller('MainCtrl', function($scope, $state, $ionicPopup, $ionicSideMenuDelegate, DBService) {
@@ -72,64 +72,64 @@ angular.module('RecipeBook', ['ionic', 'recipe.service'])
             $ionicSideMenuDelegate.toggleLeft();
         };
 
-        $scope.headertxt = 'Random Recipe';
+        $scope.headertxt = 'Random plant';
 
-        $scope.getRandomRecipe = function() {
-            DBService.getRecipe().then(function (results) {
+        $scope.getRandomplant = function() {
+            DBService.getplant().then(function (results) {
 
                 if(results.length === 0){
                     $ionicPopup.alert({
                         title: "Warning",
-                        template: "No recipe to display. Please add a recipe."
+                        template: "No plant to display. Please add a plant."
                     }).then(function(res) {
-                        $state.go('recipemenu.add-recipe');
+                        $state.go('plantmenu.add-plant');
                     });
                 }else{
-                    var random_recipe = [];
-                    random_recipe.push(results[Math.floor(Math.random()* results.length)]);
-                    $scope.recipe = random_recipe;
+                    var random_plant = [];
+                    random_plant.push(results[Math.floor(Math.random()* results.length)]);
+                    $scope.plant = random_plant;
                 }
             });
         }
 
         DBService.setup().then(function(){
-            $scope.getRandomRecipe();
+            $scope.getRandomplant();
         });
 
     })
 
-    .controller('RecipeDetailCtrl', function($scope, $state, $stateParams, $ionicPopup, DBService) {
-        $scope.headertxt = 'Recipe Detail';
+    .controller('plantDetailCtrl', function($scope, $state, $stateParams, $ionicPopup, DBService) {
+        $scope.headertxt = 'plant Detail';
 
         $scope.init = function() {
-            DBService.getRecipeById($stateParams.recipeId).then(function (results) {
-                $scope.recipe = results;
+            DBService.getplantById($stateParams.plantId).then(function (results) {
+                $scope.plant = results;
             });
         }
 
         $scope.init();
     })
 
-    .controller('AllRecipeCtrl', function($scope, $state, $ionicPopup, $ionicActionSheet, DBService) {
-        $scope.loadRecipe = function() {
-            DBService.getRecipe().then(function (results) {
+    .controller('AllplantCtrl', function($scope, $state, $ionicPopup, $ionicActionSheet, DBService) {
+        $scope.loadplant = function() {
+            DBService.getplant().then(function (results) {
 
                 if(results.length === 0){
                     $ionicPopup.alert({
                         title: "Warning",
-                        template: "No recipe to display. Please add a recipe."
+                        template: "No plant to display. Please add a plant."
                     }).then(function(res) {
-                        $state.go('recipemenu.add-recipe');
+                        $state.go('plantmenu.add-plant');
                     });
                 }else{
-                    $scope.recipe = results;
+                    $scope.plant = results;
                 }
             });
         }
 
-        $scope.loadRecipe();
+        $scope.loadplant();
 
-        $scope.delRecipe = function(recipeId){
+        $scope.delplant = function(plantId){
             $ionicActionSheet.show({
                 titleText: 'Confirm Delete',
                 destructiveText: 'Delete',
@@ -138,12 +138,12 @@ angular.module('RecipeBook', ['ionic', 'recipe.service'])
                     //console.log('CANCELLED');
                 },
                 destructiveButtonClicked: function() {
-                    DBService.delRecipe(recipeId).then(function () {
+                    DBService.delplant(plantId).then(function () {
                         $ionicPopup.alert({
                             title: "Success",
-                            template: "Recipe deleted."
+                            template: "plant deleted."
                         }).then(function(res) {
-                            $scope.loadRecipe();
+                            $scope.loadplant();
                         });
                     });
                     return true;
@@ -151,55 +151,55 @@ angular.module('RecipeBook', ['ionic', 'recipe.service'])
             });
         }
 
-        $scope.editRecipe = function(recipe_Id){
-            $state.go('recipemenu.edit-recipe/:recipeId',{recipeId:recipe_Id});
+        $scope.editplant = function(plant_Id){
+            $state.go('plantmenu.edit-plant/:plantId',{plantId:plant_Id});
         }
     })
 
-    .controller('AddRecipeCtrl', function($scope, $ionicPopup, $stateParams, DBService) {
+    .controller('AddplantCtrl', function($scope, $ionicPopup, $stateParams, DBService) {
 
-        $scope.recipe = {};
+        $scope.plant = {};
 
-        if($stateParams.recipeId === undefined){
+        if($stateParams.plantId === undefined){
             $scope.action = 'Add';
             $scope.btnaction = 'Submit';
         }else{
             $scope.action = 'Edit';
             $scope.btnaction = 'Update';
 
-            DBService.getRecipeById($stateParams.recipeId).then(function (results) {
-                $scope.recipe.name = results[0].recipe_name;
-                $scope.recipe.category = results[0].recipe_category;
-                $scope.recipe.instructions = results[0].recipe_instructions;
+            DBService.getplantById($stateParams.plantId).then(function (results) {
+                $scope.plant.name = results[0].plant_name;
+                $scope.plant.category = results[0].plant_category;
+                $scope.plant.instructions = results[0].plant_instructions;
             });
         }
 
-        $scope.saveRecipe = function(recipe){
-            if(recipe === undefined || recipe.name === null || recipe.name === ""){
+        $scope.saveplant = function(plant){
+            if(plant === undefined || plant.name === null || plant.name === ""){
                 $ionicPopup.alert({
                     title: 'Error - Input Required',
-                    template: 'Please enter recipe name.'
+                    template: 'Please enter plant name.'
                 });
-            }else if (recipe.category === undefined || recipe.category === null || recipe.category === ""){
+            }else if (plant.category === undefined || plant.category === null || plant.category === ""){
                 $ionicPopup.alert({
                     title: 'Error - Input Required',
                     template: 'Please select a category.'
                 });
-            }else if (recipe.instructions === undefined || recipe.instructions === null || recipe.instructions === ""){
+            }else if (plant.instructions === undefined || plant.instructions === null || plant.instructions === ""){
                 $ionicPopup.alert({
                     title: 'Error - Input Required',
                     template: 'Please enter instructions.'
                 });
             }else{
-                if($stateParams.recipeId === undefined) {
-                    DBService.saveRecipe(recipe);
+                if($stateParams.plantId === undefined) {
+                    DBService.saveplant(plant);
                 }else{
-                    DBService.updateRecipe(recipe, $stateParams.recipeId);
+                    DBService.updateplant(plant, $stateParams.plantId);
                 }
 
-                $scope.recipe.name = '';
-                $scope.recipe.category = '';
-                $scope.recipe.instructions = '';
+                $scope.plant.name = '';
+                $scope.plant.category = '';
+                $scope.plant.instructions = '';
             }
         }
     });
