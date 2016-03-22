@@ -1,4 +1,3 @@
-
 angular.module('PlantGuide', ['ionic', 'plant.guide'])
 
     .config(function($stateProvider, $urlRouterProvider) {
@@ -33,9 +32,9 @@ angular.module('PlantGuide', ['ionic', 'plant.guide'])
                 views: {
                     'menuContent' :{
                         templateUrl: "all-plant.html",
-                        controller: "AllplantCtrl"
-                    }
+                    controller: "AllplantCtrl"
                 }
+             }
             })
             .state('plantmenu.add-plant', {
                 url: "/add-plant",

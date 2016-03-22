@@ -2,14 +2,14 @@
 <html ng-app="PlantGuide">
   <head>
     <meta charset="utf-8">
-    <title>Plant Guide</title>
+    <title>PlantGuide</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
 
     <link data-require="ionic@1.0.0-beta.1" data-semver="1.0.0-beta.1" rel="stylesheet" href="http://code.ionicframework.com/1.0.0-beta.13/css/ionic.css" />
     <script data-require="ionic@1.0.0-beta.1" data-semver="1.0.0-beta.1" src="http://code.ionicframework.com/1.0.0-beta.13/js/ionic.bundle.js"></script>
       
       <script src="app.js"></script>
-    <script src="plant-guide.js"></script>
+      <script src="plant-guide.js"></script>
   </head>
   
   <body ng-controller="MainCtrl">
@@ -34,9 +34,9 @@
             <ion-content>
                 <ul class="list">
                     <!-- Note each link has the 'menu-close' attribute so the menu auto closes when clicking on one of these links -->
-                    <a href="#/recipeURL/all-plant" class="item" menu-close>All plant</a>
-                    <a href="#/recipeURL/add-plant" class="item" menu-close>Add Plant</a>
-                    <a href="#/recipeURL/about" class="item" menu-close>About</a>
+                    <a href="#" class="item" menu-close>All plant</a>
+                    <a href="#" class="item" menu-close>Add Plant</a>
+                    <a href="#" class="item" menu-close>About</a>
                 </ul>
             </ion-content>
         </ion-side-menu>
@@ -47,19 +47,19 @@
 <script id="home.html" type="text/ng-template">
     <ion-view title="Plant Guide">
         <ion-content>
-            <div class="list card" ng-repeat="p in plant">
+            <div class="list card">
                 <div class="item item-divider">
                     {{ headertxt }}
                 </div>
                 <div class="item">
-                    <h2 class="assertive">{{ r.plant_name }}</h2>
-                    <p><b>Category:</b> {{ r.plant_category }}</p>
+                    <h2 class="assertive">Plant Name</h2>
+                    <p><b>Category:</b>Plant Category</p>
                 </div>
 
                 <div class="item item-body">
                     <p>
                         <b>Instruction:</b><br><br>
-                        <span style="white-space: pre;">{{ r.planting_instructions }}</span>
+                        <span style="white-space: pre;">Planting Instructions</span>
                     </p>
                  </div>
             </div>
@@ -70,36 +70,45 @@
 </script>
 
 <script id="all-plant.html" type="text/ng-template">
-    <ion-view title="List plant">
+    <ion-view title="List Plant">
         <ion-content>
 
             <div class="list">
                     <div class="item item-input-inset">
                         <label class="item-input-wrapper">
-                            <input type="text" placeholder="Search plant" maxlength="50" ng-model="searchplant.plant_name">
+                            <input type="text" placeholder="Search Plants" maxlength="50" ng-model="searchplant.plant_name">
                         </label>
                     </div>
             </div>
 
-            <ion-list>
-                <ion-item href="#/plantURL/plant-detail/{{ r.id }}" ng-repeat="r in recipe | filter:searchplant" item="r">
-                    <h2 class="assertive">{{r.plant_name}}</h2>
-                    <h3 class="royal">{{r.plant_category}}</h3>
-                    <ion-option-button class="icon-left ion-edit button-positive" ng-click="editPlant(p.id)">
-                        Edit
-                    </ion-option-button>
-                    <ion-option-button class="icon-left ion-trash-a button-assertive"  ng-click="delPlant(p.id)">
-                        Delete
-                    </ion-option-button>
-                </ion-item>
-            </ion-list>
+            <ul class="list">
+            <li class="item">
+                <h2>Carrots</h2>
+                <p>Vegetables</p>
+            </li> 
+            
+              <li class="item">
+                <h2>Spinach</h2>
+                <p>Vegetables/p>
+            </li>  
 
-        </ion-content>
-    </ion-view>
+              <li class="item">
+                <h2>Tomatos</h2>
+                <p>Vegetables</p>
+            </li>  
+
+              <li class="item">
+                <h2>Kale</h2>
+                <p>Vegetables</p>
+            </li>     
+
+</ion-content>
+</ion-view>
 </script>
 
+
 <script id="add-plant.html" type="text/ng-template">
-    <ion-view title="{{ action }} Plant">
+    <ion-view title="Add Plant">
         <ion-content>
             <form ng-submit="savePlant(plant)">
                 <div class="list list-inset">
@@ -112,19 +121,16 @@
                             Category
                         </div>
                         <select ng-model="plant.category">
-                            <option value="" ng-selected="plant.category==''">Select</option>
                             <option value="Vegetables" ng-selected="plant.category=='Vegetables'">Vegetables</option>
                             <option value="Flowers" ng-selected="plant.category=='Flowers'">Flowers</option>
                         </select>
                     </label>
                     <label class="item item-input item-floating-label">
                         <span class="input-label">Instructions</span>
-                        <textarea placeholder="Instructions" name="pageTextInput" maxlength="500" rows="4" cols="10" ng-model="planting.instructions"></textarea>
+                        <textarea placeholder="Instructions" maxlength="500" rows="4" cols="10"></textarea>
                     </label>
 
-                    <button type="submit" class="button button-block button-positive">
-                        {{ btnaction }}
-                    </button>
+                    <button type="submit" class="button button-block button-positive">Submit</button>
                     <br><br>
                 </div>
             </form>
@@ -136,7 +142,7 @@
     <ion-view title="About">
         <ion-content>
             <div style="padding-top: 100px; text-align: center">
-                <h1>Recipe Book</h1>
+                <h1>Plant Guide</h1>
                 <h4>Version 1.0</h4>
             </div>
         </ion-content>
