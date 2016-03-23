@@ -32,7 +32,7 @@ angular.module('plant.guide', [])
             return deferred.promise;
         }
 
-        function getplant(){
+        function getPlant(){
             var deferred = $q.defer();
 
             if(db === null){
@@ -52,7 +52,7 @@ angular.module('plant.guide', [])
                     if(result === null || result === undefined){
                         deferred.resolve(plants);
                     }else{
-                        plants.push(result.value);
+                        plant.push(result.value);
                         result.continue();
                     }
                 };
@@ -64,7 +64,7 @@ angular.module('plant.guide', [])
             return deferred.promise;
         }
 
-        function getplantById(plantId){
+        function getPlantById(plantId){
             var deferred = $q.defer();
 
             if(db === null){
@@ -90,8 +90,8 @@ angular.module('plant.guide', [])
             return deferred.promise;
         }
 
-        function savePlant(Plant){
-            var Plant_name = Plant.name;
+        function savePlant(plant){
+            var plant_name = plant.name;
             var plant_category = plant.category;
             var plant_instructions = plant.instructions;
 
@@ -126,7 +126,7 @@ angular.module('plant.guide', [])
             return deferred.promise;
         }
 
-        function delplant(plantId){
+        function delPlant(plantId){
             var deferred = $q.defer();
 
             if(db === null){
@@ -194,7 +194,7 @@ angular.module('plant.guide', [])
                 return createDB();
             },
             getplant: function(){
-                return getplant();
+                return getPlant();
             },
             getplantById: function(plantId){
                 return getplantById(plantId);

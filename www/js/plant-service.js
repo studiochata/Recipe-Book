@@ -1,6 +1,6 @@
-angular.module('starter.services', [])
+angular.module('starter.plant-service', [])
 
-.factory('Plants', function() {
+.factory('Plant', function() {
   // Might use a resource here that returns a JSON array
 
   // Some fake testing data
@@ -33,15 +33,15 @@ angular.module('starter.services', [])
 
   return {
     all: function() {
-      return Plants;
+      return Plant;
     },
-    remove: function(chat) {
-      plants.splice(chats.indexOf(chat), 1);
+    remove: function(plant) {
+      plant.splice(plant.indexOf(plant), 1);
     },
-    get: function(chatId) {
+    get: function(plnId) {
       for (var i = 0; i < plants.length; i++) {
-        if (plants[i].id === parseInt(chatId)) {
-          return plants[i];
+        if (plant[i].id === parseInt(plantId)) {
+          return plant[i];
         }
       }
       return null;

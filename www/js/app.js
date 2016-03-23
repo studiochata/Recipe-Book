@@ -76,14 +76,14 @@ angular.module('PlantGuide', ['ionic', 'plant.guide'])
         $scope.getRandomplant = function() {
             DBService.getplant().then(function (results) {
 
-                if(results.length === 0){
-                    $ionicPopup.alert({
-                        title: "Warning",
-                        template: "No plant to display. Please add a plant."
-                    }).then(function(res) {
-                        $state.go('plantmenu.add-plant');
-                    });
-                }else{
+                if(results.length !== 0){
+                    // $ionicPopup.alert({
+                        // title: "Warning",
+                        // template: "No plant to display. Please add a plant."
+                    // }).then(function(res) {
+                        // $state.go('plantmenu.add-plant');
+                    // });
+                // }else{
                     var random_plant = [];
                     random_plant.push(results[Math.floor(Math.random()* results.length)]);
                     $scope.plant = random_plant;
@@ -113,14 +113,14 @@ angular.module('PlantGuide', ['ionic', 'plant.guide'])
         $scope.loadplant = function() {
             DBService.getplant().then(function (results) {
 
-                if(results.length === 0){
-                    $ionicPopup.alert({
-                        title: "Warning",
-                        template: "No plant to display. Please add a plant."
-                    }).then(function(res) {
-                        $state.go('plantmenu.add-plant');
-                    });
-                }else{
+                if(results.length !== 0){
+                    // $ionicPopup.alert({
+                        // title: "Warning",
+                        // template: "No plant to display. Please add a plant."
+                    // }).then(function(res) {
+                        // $state.go('plantmenu.add-plant');
+                    // });
+                // }else{
                     $scope.plant = results;
                 }
             });
